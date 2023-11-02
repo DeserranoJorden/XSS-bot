@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-const URL = "http://192.168.1.108:8123/";
+const URL = "http://192.168.1.108:8123/users";
 const FLAG = "HTF{You don't even know what afraid is}";
 const JWT = "eyJpdiI6IlArWllsNjJWbnU5RElWT1lLaTJCSFE9PSIsInZhbHVlIjoiNDJLRnF0TXNkYjZGY2NJTWtoaHRlOVIyWENTTXVXaDNJZ3NnVERYN2lcLzdmVmJ1UVFUYTZ3NEErdXF6NitpYXQiLCJtYWMiOiIzZGI1NmIzNTc3NTI4MGE1YzcyZDgzNzFhZGIyMWY4MjZlOTgxYmQ0NWViYjA2ZjU1NjA3YWZmODE5Mzg1NzY2In0%3D";
 
@@ -35,7 +35,7 @@ const JWT = "eyJpdiI6IlArWllsNjJWbnU5RElWT1lLaTJCSFE9PSIsInZhbHVlIjoiNDJLRnF0TXN
         "httpOnly": false,
         "secure": false,
     });
-    await page.goto(url, { waitUntil: 'networkidle0', timeout: 10000});
+    await page.goto(URL, { waitUntil: 'networkidle0', timeout: 10000});
     console.log("[INFO] rendered page: " + url);
     await page.close();
     await browser.close();

@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "puppeteer": "^21.4.1"
+  },
+  "name": "xss-bot",
+  "version": "1.0.0",
+  "main": "XSS_bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
