@@ -4,6 +4,7 @@ FROM node:slim
 
 # We don't need the standalone Chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+ENV URL http://192.168.1.108:8123
 
 # Install Google Chrome Stable and fonts
 # Note: this installs the necessary libs to make the browser work with Puppeteer.
@@ -28,4 +29,4 @@ RUN npm install
 COPY XSS_bot.js ./
 
 # Run app
-CMD ["node", "XSS_bot.js"]
+CMD ["sh", "-c", "node XSS_bot.js ${URL}"]
