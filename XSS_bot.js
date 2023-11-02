@@ -1,19 +1,22 @@
 const puppeteer = require('puppeteer');
 
-const URL = "http://192.168.1.108:8123/users";
+const URL = "http://192.168.1.108:8123/";
 const FLAG = "HTF{You don't even know what afraid is}";
 const JWT = "eyJpdiI6IlArWllsNjJWbnU5RElWT1lLaTJCSFE9PSIsInZhbHVlIjoiNDJLRnF0TXNkYjZGY2NJTWtoaHRlOVIyWENTTXVXaDNJZ3NnVERYN2lcLzdmVmJ1UVFUYTZ3NEErdXF6NitpYXQiLCJtYWMiOiIzZGI1NmIzNTc3NTI4MGE1YzcyZDgzNzFhZGIyMWY4MjZlOTgxYmQ0NWViYjA2ZjU1NjA3YWZmODE5Mzg1NzY2In0%3D";
 
 (async () => {
+    console.log('Browsing application');
     const browser = await puppeteer.launch({
+        headless: true,
+        ignoreHTTPSErrors: true,
+        executablePath: '/usr/bin/google-chrome',
         args: [
+            '--disable-gpu',
             '--disable-web-security',
             '--ignore-certificate-errors',
             '--no-sandbox',
             '--disable-setuid-sandbox'
-        ],
-        headless: true,
-        ignoreHTTPSErrors: true,
+        ]
     });
     const page = await browser.newPage();
     await page.setCookie({
