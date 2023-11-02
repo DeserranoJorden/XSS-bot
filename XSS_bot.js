@@ -36,7 +36,7 @@ const JWT = "eyJpdiI6IlArWllsNjJWbnU5RElWT1lLaTJCSFE9PSIsInZhbHVlIjoiNDJLRnF0TXN
         "secure": false,
     });
     await page.goto(URL, { waitUntil: 'networkidle0', timeout: 10000});
-    console.log("[INFO] rendered page: " + url);
+    console.log("[INFO] rendered page: " + URL);
     await page.close();
     await browser.close();
 })();
