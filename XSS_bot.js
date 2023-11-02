@@ -1,12 +1,31 @@
 const puppeteer = require('puppeteer');
+const Apify = require('apify');
 
-const URL = "http://192.168.1.108:8123/users";
-const FLAG = "HTF{You don't even know what afraid is}";
-const JWT = "eyJpdiI6IlArWllsNjJWbnU5RElWT1lLaTJCSFE9PSIsInZhbHVlIjoiNDJLRnF0TXNkYjZGY2NJTWtoaHRlOVIyWENTTXVXaDNJZ3NnVERYN2lcLzdmVmJ1UVFUYTZ3NEErdXF6NitpYXQiLCJtYWMiOiIzZGI1NmIzNTc3NTI4MGE1YzcyZDgzNzFhZGIyMWY4MjZlOTgxYmQ0NWViYjA2ZjU1NjA3YWZmODE5Mzg1NzY2In0%3D";
+var args = process.argv.slice(2);
 
-(async () => {
-    console.log('Browsing application');
-    const browser = await puppeteer.launch({
+const URL = process.argv[0];
+const FLAG = "HTF{You+don't+even+know+what+afraid+is}";
+const username = "admin@htf.be";
+const password = "tSFSecurePassword123";
+
+Apify.main(async () => {
+    const browser = await Apify.launchPuppeteer();
+    const page = await browser.newPage();
+    await page.goto(URL + "/login");
+
+    // Login
+    await page.type('#email', username);
+    await page.type('#password', password);
+    await page.click('button[type="submit"]');
+    console.log("[INFO] logging in");
+    await page.waitForNavigation();
+
+    // Get cookies
+    const cookies = await page.cookies();
+
+    await browser.close();
+
+    const browser2 = await puppeteer.launch({
         headless: true,
         ignoreHTTPSErrors: true,
         executablePath: '/usr/bin/google-chrome',
@@ -18,25 +37,18 @@ const JWT = "eyJpdiI6IlArWllsNjJWbnU5RElWT1lLaTJCSFE9PSIsInZhbHVlIjoiNDJLRnF0TXN
             '--disable-setuid-sandbox'
         ]
     });
-    const page = await browser.newPage();
-    await page.setCookie({
+    const page2 = await browser2.newPage();
+    await page2.setCookie({
         "name": "flag",
         "value": FLAG,
-        "domain": "192.168.1.108",
+        "domain": "127.0.0.1",
         "path": "/",
         "httpOnly": false,
         "secure": false,
     });
-    await page.setCookie({
-        "name": "jumanji_fan_forum_session",
-        "value": JWT,
-        "domain": "192.168.1.108",
-        "path": "/",
-        "httpOnly": false,
-        "secure": false,
-    });
-    await page.goto(URL, { waitUntil: 'networkidle0', timeout: 10000});
-    console.log("[INFO] rendered page: " + URL);
-    await page.close();
-    await browser.close();
-})();
+    await page2.setCookie(...cookies);
+    await page2.goto(URL + "/users", { waitUntil: 'networkidle0', timeout: 10000});
+    console.log("[INFO] Going to users page");
+    await page2.close();
+    await browser2.close();
+});
