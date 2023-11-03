@@ -48,6 +48,6 @@ while (True) {
         console.log("[INFO] Going to users page");
         await page2.close();
         await browser.close();
+        await new Promise(resolve => setTimeout(resolve, 300));
     })();
-    await new Promise(resolve => setTimeout(resolve, 300));
 }
