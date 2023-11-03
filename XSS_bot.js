@@ -48,7 +48,7 @@ const loop = async () => {
                     "secure": false,
                 });
                 await page2.setCookie(...cookies);
-                await page2.goto("http://" + URL + "/users", { waitUntil: 'networkidle0', timeout: 10000});
+                await page2.goto("http://" + URL + "/users");
                 page2.on('dialog', async dialog => {
                     await dialog.accept();
                     console.log("found an alert(1)");
