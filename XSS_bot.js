@@ -1,5 +1,4 @@
 const puppeteer = require('puppeteer');
-const Apify = require('apify');
 
 var args = process.argv.slice(2);
 
@@ -8,8 +7,19 @@ const FLAG = "HTF{You+don't+even+know+what+afraid+is}";
 const username = "admin@htf.be";
 const password = "tSFSecurePassword123";
 
-Apify.main(async () => {
-    const browser = await Apify.launchPuppeteer();
+(async () => {
+    const browser = await puppeteer.launch({
+        headless: true,
+        ignoreHTTPSErrors: true,
+        executablePath: '/usr/bin/google-chrome',
+        args: [
+            '--disable-gpu',
+            '--disable-web-security',
+            '--ignore-certificate-errors',
+            '--no-sandbox',
+            '--disable-setuid-sandbox'
+        ]
+    });
     const page = await browser.newPage();
     await page.goto(URL + "/login");
 
@@ -23,21 +33,7 @@ Apify.main(async () => {
     // Get cookies
     const cookies = await page.cookies();
 
-    await browser.close();
-
-    const browser2 = await puppeteer.launch({
-        headless: true,
-        ignoreHTTPSErrors: true,
-        executablePath: '/usr/bin/google-chrome',
-        args: [
-            '--disable-gpu',
-            '--disable-web-security',
-            '--ignore-certificate-errors',
-            '--no-sandbox',
-            '--disable-setuid-sandbox'
-        ]
-    });
-    const page2 = await browser2.newPage();
+    const page2 = await browser.newPage();
     await page2.setCookie({
         "name": "flag",
         "value": FLAG,
@@ -50,5 +46,5 @@ Apify.main(async () => {
     await page2.goto(URL + "/users", { waitUntil: 'networkidle0', timeout: 10000});
     console.log("[INFO] Going to users page");
     await page2.close();
-    await browser2.close();
-});
+    await browser.close();
+})();
