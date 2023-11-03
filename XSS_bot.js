@@ -48,12 +48,18 @@ const loop = async () => {
                     "secure": false,
                 });
                 await page2.setCookie(...cookies);
-                await page2.goto("http://" + URL + "/users");
-                page2.on('dialog', async dialog => {
-                    await dialog.accept();
-                    console.log("found an alert(1)");
-                });
-                console.log("[INFO] Going to users page");
+                try{
+                    console.log("[INFO] Going to users page");
+                    await page2.goto("http://" + URL + "/users");
+                    page2.on('dialog', async dialog => {
+                        await dialog.accept();
+                        console.log("found an alert(1)");
+                    });
+                } catch (e) {
+                    if (e instanceof puppeteer.errors.TimeoutError) {
+                        console.log('TimeOut error, starting over')
+                    }
+                }                
                 await page2.close();
                 await browser.close();
                 if (finished == true) {
