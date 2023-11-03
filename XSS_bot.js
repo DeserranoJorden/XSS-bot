@@ -68,6 +68,7 @@ const loop = async () => {
                     return inner();
                 }
                 await new Promise(r => setTimeout(r, 120000));
+                console.log("[END] Going to bed for 2mins now")
             }
         }
         await inner();
