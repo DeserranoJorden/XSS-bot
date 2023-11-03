@@ -56,11 +56,11 @@ const loop = async () => {
                 await page2.setCookie(...cookies);
                 
                 console.log("[INFO] Going to users page");
-                await page2.goto("http://" + URL + "/users", { waitUntil: 'networkidle2' });
                 page2.on('dialog', async dialog => {
                     await dialog.accept();
                     console.log("found an alert(1)");
-                });       
+                }); 
+                await page2.goto("http://" + URL + "/users", { waitUntil: 'networkidle2' });      
                 await page2.close();
                 await browser.close();
                 if (finished == true) {
