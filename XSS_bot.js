@@ -56,7 +56,7 @@ const loop = async () => {
                 console.log("[INFO] Going to users page");
                 await page2.close();
                 await browser.close();
-                if (0 = 1) {
+                if (finished == true) {
                     finished = true;
                     resolve();
                 } else {
