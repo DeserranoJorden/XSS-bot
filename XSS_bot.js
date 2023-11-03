@@ -29,12 +29,17 @@ const loop = async () => {
                 await page.goto("http://" + URL + "/login");
             
                 // Login
-                await page.type('#email', username);
-                await page.type('#password', password);
-                await page.click('button.btn-primary');
-                console.log("[INFO] logging in");
-                await page.waitForNavigation();
-            
+                try{
+                    await page.type('#email', username);
+                    await page.type('#password', password);
+                    await page.click('button.btn-primary');
+                    console.log("[INFO] logging in");
+                    await page.waitForNavigation();
+                } catch (e) {
+                    if (e instanceof puppeteer.errors.TimeoutError) {
+                        console.log('TimeOut error, starting over')
+                    }
+                }  
                 // Get cookies
                 const cookies = await page.cookies();
             
@@ -48,18 +53,13 @@ const loop = async () => {
                     "secure": false,
                 });
                 await page2.setCookie(...cookies);
-                try{
-                    console.log("[INFO] Going to users page");
-                    await page2.goto("http://" + URL + "/users");
-                    page2.on('dialog', async dialog => {
-                        await dialog.accept();
-                        console.log("found an alert(1)");
-                    });
-                } catch (e) {
-                    if (e instanceof puppeteer.errors.TimeoutError) {
-                        console.log('TimeOut error, starting over')
-                    }
-                }                
+                
+                console.log("[INFO] Going to users page");
+                await page2.goto("http://" + URL + "/users", { waitUntil: 'networkidle2' });
+                page2.on('dialog', async dialog => {
+                    await dialog.accept();
+                    console.log("found an alert(1)");
+                });       
                 await page2.close();
                 await browser.close();
                 if (finished == true) {
