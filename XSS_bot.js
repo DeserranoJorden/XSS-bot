@@ -21,7 +21,7 @@ const password = "tSFSecurePassword123";
         ]
     });
     const page = await browser.newPage();
-    await page.goto(URL + "/login");
+    await page.goto("http://" + URL + "/login");
 
     // Login
     await page.type('#email', username);
@@ -43,7 +43,7 @@ const password = "tSFSecurePassword123";
         "secure": false,
     });
     await page2.setCookie(...cookies);
-    await page2.goto(URL + "/users", { waitUntil: 'networkidle0', timeout: 10000});
+    await page2.goto("http://" + URL + "/users", { waitUntil: 'networkidle0', timeout: 10000});
     console.log("[INFO] Going to users page");
     await page2.close();
     await browser.close();
