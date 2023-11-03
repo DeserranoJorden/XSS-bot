@@ -21,7 +21,8 @@ const password = "tSFSecurePassword123";
         ]
     });
     const page = await browser.newPage();
-    await page.goto("http://" + URL + "/login");
+    const status = await page.goto("http://" + URL + "/login");
+    console.log(status.status());
 
     // Login
     await page.type('#email', username);
@@ -37,7 +38,7 @@ const password = "tSFSecurePassword123";
     await page2.setCookie({
         "name": "flag",
         "value": FLAG,
-        "domain": "127.0.0.1",
+        "domain": "URL",
         "path": "/",
         "httpOnly": false,
         "secure": false,
