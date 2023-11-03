@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 
 var args = process.argv.slice(2);
 
-const URL = process.argv[0];
+const URL = args[0];
 const FLAG = "HTF{You+don't+even+know+what+afraid+is}";
 const username = "admin@htf.be";
 const password = "tSFSecurePassword123";
