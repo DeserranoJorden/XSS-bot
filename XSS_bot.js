@@ -43,6 +43,7 @@ const password = "tSFSecurePassword123";
         "httpOnly": false,
         "secure": false,
     });
+    console.log(cookies);
     await page2.setCookie(...cookies);
     await page2.goto("http://" + URL + "/users", { waitUntil: 'networkidle0', timeout: 10000});
     console.log("[INFO] Going to users page");
