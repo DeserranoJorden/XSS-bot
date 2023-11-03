@@ -14,6 +14,7 @@ const loop = async () => {
         const inner = async() => {
             if (!finished) {
                 const browser = await puppeteer.launch({
+                    headless: 'new',
                     ignoreHTTPSErrors: true,
                     executablePath: '/usr/bin/google-chrome',
                     args: [
@@ -36,11 +37,12 @@ const loop = async () => {
                     await page.waitForNavigation();
                 } catch (e) {
                     if (e instanceof puppeteer.errors.TimeoutError) {
-                        console.log('[ERROR] TimeOut error, just continue pleaseeeee')
+                        console.log('[ERROR] Timeout, just continue pleaseeeee')
                     }
                 }  
                 // Get cookies
                 const cookies = await page.cookies();
+                console.log
             
                 const page2 = await browser.newPage();
                 cookies.push({
@@ -65,8 +67,8 @@ const loop = async () => {
                     finished = true;
                     resolve();
                 } else {
-                    await new Promise(r => setTimeout(r, 120000));
                     console.log("[END] Going to bed for 2mins now")
+                    await new Promise(r => setTimeout(r, 120000));
                     return inner();
                 }
             }
