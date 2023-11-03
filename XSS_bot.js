@@ -7,7 +7,9 @@ const FLAG = "HTF{You+don't+even+know+what+afraid+is}";
 const username = "admin@htf.be";
 const password = "tSFSecurePassword123";
 
-while (True) {
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+while (true) {
     (async () => {
         const browser = await puppeteer.launch({
             headless: true,
@@ -48,6 +50,6 @@ while (True) {
         console.log("[INFO] Going to users page");
         await page2.close();
         await browser.close();
-        await new Promise(resolve => setTimeout(resolve, 300));
+        await sleep(3000);
     })();
 }
