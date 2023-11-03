@@ -35,6 +35,7 @@ const password = "tSFSecurePassword123";
     const cookies = await page.cookies();
 
     const page2 = await browser.newPage();
+    await page2.setCookie(...cookies);
     await page2.setCookie({
         "name": "flag",
         "value": FLAG,
@@ -43,7 +44,6 @@ const password = "tSFSecurePassword123";
         "httpOnly": false,
         "secure": false,
     });
-    await page2.setCookie(...cookies);
     await page2.goto("http://" + URL + "/users", { waitUntil: 'networkidle0', timeout: 10000});
     console.log("[INFO] Going to users page");
     await page2.close();
