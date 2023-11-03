@@ -65,10 +65,10 @@ const loop = async () => {
                     finished = true;
                     resolve();
                 } else {
+                    await new Promise(r => setTimeout(r, 120000));
+                    console.log("[END] Going to bed for 2mins now")
                     return inner();
                 }
-                await new Promise(r => setTimeout(r, 120000));
-                console.log("[END] Going to bed for 2mins now")
             }
         }
         await inner();
