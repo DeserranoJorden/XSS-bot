@@ -38,7 +38,7 @@ const password = "tSFSecurePassword123";
     cookies.push({
         "name": "flag",
         "value": FLAG,
-        "domain": "URL",
+        "domain": URL,
         "path": "/",
         "httpOnly": false,
         "secure": false,
