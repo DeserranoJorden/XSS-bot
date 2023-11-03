@@ -26,7 +26,7 @@ const password = "tSFSecurePassword123";
     // Login
     await page.type('#email', username);
     await page.type('#password', password);
-    await page.click('button[type="submit"]');
+    await page.click('input[type="submit"]');
     console.log("[INFO] logging in");
     await page.waitForNavigation();
 
