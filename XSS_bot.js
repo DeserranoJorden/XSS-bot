@@ -68,5 +68,6 @@ const loop = async () => {
         await inner();
     })
 }
+loop();
 
 
